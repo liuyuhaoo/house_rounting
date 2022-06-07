@@ -36,13 +36,17 @@ public class UserInfo {
     @TableField("time")
     @ApiModelProperty(value="创建时间")
     private Date time;
+    @TableField("type")
+    @ApiModelProperty(value="账号类型")
+    private int type;
 
     public UserInfo(){
     }
-    public UserInfo(String name,String password){
+    public UserInfo(String name,String password, int type){
         this.name = name;
         this.password = password;
         this.time = new Date();
+        this.type = type;
     }
     public UserInfo(UserInfoVO userInfoVO){
         this.id = userInfoVO.getId();
@@ -51,6 +55,7 @@ public class UserInfo {
         this.phone = userInfoVO.getPhone();
         this.email = userInfoVO.getEmail();
         this.realName = userInfoVO.getRealName();
+        this.type = userInfoVO.getType();
     }
 
 }

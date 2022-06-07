@@ -16,7 +16,7 @@ class MicroserviceEurekaHouseApplicationTests {
     @Test
     void contextLoads() {
     }
-    HouseInfoVO houseInfoVO = new HouseInfoVO("66", "测试租房", "测试地点", 300.00, "1", "admin", 0);
+    HouseInfoVO houseInfoVO = new HouseInfoVO("66", "测试租房", "测试地点", 300.00, "1", "admin", 0, 2);
     @Test
     void Ccreate(){
         houseInfoController.create(houseInfoVO);

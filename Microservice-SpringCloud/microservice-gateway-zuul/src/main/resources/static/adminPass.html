@@ -28,8 +28,8 @@
         <th>价格</th>
         <th>时间</th>
         <th>销量</th>
-        <th>修改</th>
-        <th>删除</th>
+        <th>通过</th>
+        <th>不通过</th>
     </tr>
     </thead>
     <tbody id="t_body">
@@ -39,7 +39,6 @@
 <script>
     function order() {
         userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
-        document.getElementById('userId').value=userInfo.id;
         $.ajax({
             type : "GET",
             async: true,
@@ -55,8 +54,8 @@
                         "<td>" + data[i].price + "</td>" +
                         "<td>" + data[i].time + "</td>" +
                         "<td>" + data[i].sale + "</td>" +
-                        "<td><a href=\"javascript:update(\'"+data[i].houseId+"')\">编辑</a></td>" +
-                        "<td><a href=\"javascript:detele(\'"+data[i].houseId+"')\">删除</a></td>" +
+                        "<td><a href=\"javascript:pass(\'"+data[i].houseId+"')\">通过</a></td>" +
+                        "<td><a href=\"javascript:unpass(\'"+data[i].houseId+"')\">不通过</a></td>" +
                         "</tr>";
                 }
                 $("#t_body").html("");
@@ -72,18 +71,18 @@
         sessionStorage.setItem("houseId", houseId);
         window.location.href = 'houseInfoDetail.html';
     }
-    function detele(houseId) {
+    function pass(houseId) {
         $.ajax({
-            type : "DELETE",
+            type : "PUT",
             async: true,
-            url : "house/delete",
+            url : "house/pass",
             dataType : "json",        //返回数据形式为json
             data: {"id": houseId},
             success : function(result) {
                 if (result.status == 200) {
                     alert(result.msg);
-                    if(result.msg=="删除成功"){
-                        window.location.href = 'houseList.html';
+                    if(result.msg=="审核通过"){
+                        window.location.href = 'adminPass.html';
                     }
                 }
             },
@@ -92,10 +91,25 @@
             }
         })
     }
-    function update(houseId) {
-        sessionStorage.removeItem("updateHouseId");
-        sessionStorage.setItem("updateHouseId", houseId);
-        window.location.href = 'updateHouseInfo.html';
+    function unpass(houseId) {
+        $.ajax({
+            type : "PUT",
+            async: true,
+            url : "house/unpass",
+            dataType : "json",        //返回数据形式为json
+            data: {"id": houseId},
+            success : function(result) {
+                if (result.status == 200) {
+                    alert(result.msg);
+                    if(result.msg=="审核不通过"){
+                        window.location.href = 'adminPass.html';
+                    }
+                }
+            },
+            error : function(errorMsg) {
+
+            }
+        })
     }
 </script>
 

@@ -13,5 +13,8 @@ import java.util.List;
 public interface HouseInfoMapper extends BaseMapper<HouseInfo> {
     HouseInfoVO queryHouseInfoVO(String houseId);
     List<HouseInfo> listByUserId(HouseInfoQueryVO houseInfoQueryVO);
+    List<HouseInfo> listPassByUserId(HouseInfoQueryVO houseInfoQueryVO, int pass);
     void addSale(String id);
+    void pass(String id);
+    void unpass(String id);
 }

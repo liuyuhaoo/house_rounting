@@ -10,11 +10,22 @@
 <body>
 用户名<input type="text" id="name"></br>
 <a href="userInfo.html">个人资料</a>
-<a href="house.html">租房信息</a>
+<a href="javascript:house()">租房信息</a>
 </body>
 <script>
     userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
     document.getElementById('name').value=userInfo.name;
+    function house(houseId) {
+        sessionStorage.removeItem("houseId");
+        sessionStorage.setItem("houseId", houseId);
+        if(userInfo.type==1){
+            window.location.href = 'houseBuy.html';
+        }
+        else{
+            window.location.href = 'houseSale.html';
+        }
+
+    }
 </script>
 
 

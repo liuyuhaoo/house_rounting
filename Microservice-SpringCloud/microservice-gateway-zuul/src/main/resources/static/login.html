@@ -30,7 +30,12 @@
                         sessionStorage.removeItem("userInfo");
                         // 转为json在session
                         sessionStorage.setItem("userInfo", JSON.stringify(result.data));
+                        if(result.data.type==3){//管理员
+                            window.location.href = 'adminPass.html';
+                        }
+                        else{
                         window.location.href = 'main.html';
+                        }
                     }
                 }
             },

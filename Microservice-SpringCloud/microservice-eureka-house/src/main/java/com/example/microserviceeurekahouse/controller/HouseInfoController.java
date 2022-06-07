@@ -43,6 +43,7 @@ public class HouseInfoController {
         }
         HouseInfo houseInfo = new HouseInfo(houseInfoVO);
         houseInfo.setTime(new Date());
+        houseInfo.setStatus(2);     //创建时等待审核状态
         houseInfoMapper.insert(houseInfo);
         this.restTemplate.getForObject("http://microservice-eureka-userhouserelation/create?houseId="+
                 houseInfo.getId() + "&userId=" + houseInfoVO.getUserId(), Result.class);
@@ -107,6 +108,7 @@ public class HouseInfoController {
         if(orderBy != null && orderBy.length() > 0){
             queryWrapper.orderByDesc(orderBy);
         }
+        queryWrapper.eq("status", 1);//通过审核的
         List<HouseInfo> list = houseInfoMapper.selectList(queryWrapper);
         return new Result(list);
     }
@@ -120,8 +122,9 @@ public class HouseInfoController {
     @RequestMapping(value = "/listByUserId", method = RequestMethod.GET)
     public Result listByUserId(@RequestParam(value = "keyword", defaultValue = "",required = false) String keyword,
                        @RequestParam(value = "orderBy", defaultValue = "", required = false) String orderBy,
-                       @RequestParam(value = "userId", defaultValue = "", required = true) String userId) throws InterruptedException {
-        HouseInfoQueryVO houseInfoQueryVO = new HouseInfoQueryVO(userId, orderBy, keyword);
+                       @RequestParam(value = "status", defaultValue = "0", required = false) int status,
+                       @RequestParam(value = "userId", defaultValue = "", required = false) String userId) throws InterruptedException {
+        HouseInfoQueryVO houseInfoQueryVO = new HouseInfoQueryVO(userId, orderBy, keyword, status);
         List<HouseInfo> list = houseInfoMapper.listByUserId(houseInfoQueryVO);
         return new Result(list);
     }
@@ -136,6 +139,32 @@ public class HouseInfoController {
         houseInfoMapper.addSale(id);
         Result result = new Result("");
         result.setMsg("购买成功");
+        return result;
+    }
+
+    /**
+     * 审核通过
+     * @return
+     */
+    @ApiOperation(value="审核通过", notes="审核通过")
+    @RequestMapping(value = "/pass", method = RequestMethod.PUT)
+    public Result pass(@RequestParam(value = "id", defaultValue = "",required = false) String id) throws InterruptedException {
+        houseInfoMapper.pass(id);
+        Result result = new Result("");
+        result.setMsg("审核通过");
+        return result;
+    }
+
+    /**
+     * 审核不通过
+     * @return
+     */
+    @ApiOperation(value="审核不通过", notes="审核吧通过")
+    @RequestMapping(value = "/unpass", method = RequestMethod.PUT)
+    public Result unpass(@RequestParam(value = "id", defaultValue = "",required = false) String id) throws InterruptedException {
+        houseInfoMapper.unpass(id);
+        Result result = new Result("");
+        result.setMsg("审核不通过");
         return result;
     }
 
