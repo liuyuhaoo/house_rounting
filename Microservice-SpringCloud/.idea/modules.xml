@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Microservice-eureka-order/Microservice-eureka-order (1).iml" filepath="$PROJECT_DIR$/Microservice-eureka-order/Microservice-eureka-order (1).iml" />
+      <module fileurl="file://$PROJECT_DIR$/Microservice-eureka-user-hystrix/Microservice-eureka-order (2).iml" filepath="$PROJECT_DIR$/Microservice-eureka-user-hystrix/Microservice-eureka-order (2).iml" />
+      <module fileurl="file://$PROJECT_DIR$/Microservice-eureka-product/Microservice-eureka-product.iml" filepath="$PROJECT_DIR$/Microservice-eureka-product/Microservice-eureka-product.iml" />
+      <module fileurl="file://$PROJECT_DIR$/microservice-config-client/microservice-config-client.iml" filepath="$PROJECT_DIR$/microservice-config-client/microservice-config-client.iml" />
+    </modules>
+  </component>
+</project>

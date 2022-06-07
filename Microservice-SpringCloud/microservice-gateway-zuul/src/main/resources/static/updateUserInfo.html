@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script type="text/javascript" src="../js/jquery.min.js" ></script>
+<script>
+</script>
+<body>
+<form id="form1" onsubmit="return false" action="##" >
+    <input type="hidden" id="id" name="id">
+    用户名<input type="text" id="name" name="name"></br>
+    身份证<input type="text" id="idcard" name="idcard"></br>
+    手机号<input type="text" id="phone" name="phone"></br>
+    电子邮箱<input type="text" id="email" name="email"></br>
+    真实姓名<input type="text" id="realName" name="realName"></br>
+    <input type="button" value="确认" onclick="update()">
+</form>
+</body>
+<script>
+    userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
+    document.getElementById('name').value = userInfo.name;
+    document.getElementById('idcard').value = userInfo.idcard;
+    document.getElementById('phone').value = userInfo.phone;
+    document.getElementById('email').value = userInfo.email;
+    document.getElementById('realName').value = userInfo.realName;
+    document.getElementById('id').value = userInfo.id;
+    function update() {
+        var userInfoVO={
+            id :  $("#id").val(),
+            name :  $("#name").val(),
+            idcard :  $("#idcard").val(),
+            phone :  $("#phone").val(),
+            email :  $("#email").val(),
+            realName :  $("#realName").val()
+        }
+        $.ajax({
+            url: 'user/update',
+            method: 'PUT',
+            dataType: 'json',
+            contentType : 'application/json; charset=UTF-8',
+            data: JSON.stringify(userInfoVO),
+            success: function (result) {
+                console.log(result);//打印服务端返回的数据(调试用)
+                if (result.status == 200) {
+                    alert(result.msg);
+                    if(result.msg=="修改成功"){
+                        sessionStorage.removeItem("userInfo");
+                        sessionStorage.setItem("userInfo", JSON.stringify(result.data));
+                        window.location.href = 'userInfo.html';
+                    }
+                }
+            },
+            error: function () {
+                alert("异常！");
+            }
+        })
+    }
+</script>
+
+
+</html>

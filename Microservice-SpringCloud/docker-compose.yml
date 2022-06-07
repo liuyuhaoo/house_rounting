@@ -1,0 +1,45 @@
+version: '3'
+
+services:
+
+  microservice-eureka-server:
+    image: 192.168.109.134:5000/microservice-eureka-server:0.0.1-SNAPSHOT
+    restart: on-failure
+    ports:
+      - 8761:8761
+
+  microservice-gateway-zuul:
+    image: 192.168.109.134:5000/microservice-gateway-zuul:0.0.1-SNAPSHOT
+    restart: on-failure
+    ports:
+      - 8050:8050
+  microservice-userservice:
+    image: 192.168.109.134:5000/microservice-eureka-user:0.0.1-SNAPSHOT
+    restart: on-failure
+    ports:
+      - 8081:8081
+  microservice-houseservice:
+    image: 192.168.109.134:5000/microservice-eureka-house:0.0.1-SNAPSHOT
+    restart: on-failure
+    ports:
+      - 8090:8090
+  microservice-userhouserelationservice:
+    image: 192.168.109.134:5000/microservice-eureka-userhouserelation:0.0.1-SNAPSHOT
+    restart: on-failure
+    ports:
+      - 8120:8120
+  microservice-commentservice:
+    image: 192.168.109.134:5000/microservice-eureka-comment:0.0.1-SNAPSHOT
+    restart: on-failure
+    ports:
+      - 8130:8130
+  microservice-talkservice:
+    image: 192.168.109.134:5000/microservice-eureka-talk:0.0.1-SNAPSHOT
+    restart: on-failure
+    ports:
+      - 8140:8140
+  microservice-configservice:
+    image: 192.168.109.134:5000/microservice-config-server:0.0.1-SNAPSHOT
+    restart: on-failure
+    ports:
+      - 8888:8888

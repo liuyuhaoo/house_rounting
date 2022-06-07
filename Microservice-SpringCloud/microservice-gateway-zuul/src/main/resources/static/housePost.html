@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script type="text/javascript" src="../js/jquery.min.js" ></script>
+<body>
+<form id="form1" onsubmit="return false" action="##" >
+    标题<input type="text" id="title" name="title"></br>
+    地址<input type="text" id="address" name="address"></br>
+    价格<input type="text" id="price" name="price"></br>
+    <input type="hidden" id="userId" name="userId"></br>
+    <input type="button" value="发布" onclick="post()">
+</form>
+</body>
+
+<script>
+    userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
+    // document.getElementById('uname').value=userInfo.name;
+    document.getElementById('userId').value=userInfo.id;
+    function post() {
+        var house={
+            title :  $("#title").val(),
+            address :  $("#address").val(),
+            price :  $("#price").val(),
+            userId :  $("#userId").val()
+        }
+        $.ajax({
+            url: 'house/create',
+            method: 'POST',
+            dataType: 'json',
+            contentType : 'application/json; charset=UTF-8',
+            data: JSON.stringify(house),
+            success: function (result) {
+                console.log(result);//打印服务端返回的数据(调试用)
+                if (result.status == 200) {
+                    alert(result.msg);
+                    if(result.msg=="创建成功"){
+                        window.location.href = 'house.html';
+                    }
+                }
+            },
+            error: function () {
+                alert("异常！");
+            }
+        })
+    }
+</script>
+</html>

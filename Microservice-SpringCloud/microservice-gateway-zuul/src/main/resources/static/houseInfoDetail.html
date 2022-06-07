@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script type="text/javascript" src="../js/jquery.min.js" ></script>
+<script>
+    houseId = sessionStorage.getItem("houseId");
+    $.ajax({
+        type : "GET",
+        async: true,
+        url : "comment/list",
+        dataType : "json",        //返回数据形式为json
+        data: {"houseId" : houseId},
+        success : function(result) {
+            console.log(result);
+            var str = "";
+            var data = result.data;
+            for(var i=0;i<data.length ;i++){
+                str += "<tr>" +
+                    "<td>" + data[i].context + "</td>" +
+                    "<td>" + data[i].userName + "</td>" +
+                    "<td>" + data[i].time + "</td>" +
+                    "</tr>";
+            }
+            $("#t_body").html("");
+            $("#t_body").append(str);
+        },
+        error : function(errorMsg) {
+
+        }
+    })
+</script>
+<body onload="init()">
+<input type="hidden" id="id" name="id">
+标题<input type="text" id="title"></br>
+地址<input type="text" id="address"></br>
+价格<input type="text" id="price"></br>
+发布者<input type="text" id="name"></br>
+销量<input type="text" id="sale"></br>
+<input type="hidden" id="userId"></br>
+<a href="javascript:talk()">和ta聊聊</a></br>
+<a href="javascript:buy()">购买</a>
+
+<table  style="height:400px;margin-bottom: 0px;" class="table table-bordered">
+    <thead>
+    <tr>
+        <th>内容</th>
+        <th>评论者</th>
+        <th>时间</th>
+    </tr>
+    </thead>
+    <tbody id="t_body">
+    </tbody>
+</table>
+
+<form id="form1" onsubmit="return false" action="##" >
+    <input type="text" id="context" name="context">
+    <input type="hidden" id="houseId" name="houseId"></br>
+    <input type="hidden" id="userName" name="userName"></br>
+    <input type="button" value="回复" onclick="comment()">
+</form>
+</body>
+<script>
+    houseId = sessionStorage.getItem("houseId");
+    userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
+    function init() {
+        document.getElementById('userName').value=userInfo.name;
+        document.getElementById('houseId').value=houseId;
+        $.ajax({
+            type: "GET",
+            async: true,
+            url: "house/query",
+            dataType: "json",        //返回数据形式为json
+            data: {"id": houseId},
+            success: function (result) {
+                console.log(result);//打印服务端返回的数据(调试用)
+                if (result.status == 200) {
+                    document.getElementById('title').value=result.data.title;
+                    document.getElementById('address').value=result.data.address;
+                    document.getElementById('price').value=result.data.price;
+                    document.getElementById('id').value=result.data.houseId;
+                    document.getElementById('userId').value=result.data.userId;
+                    document.getElementById('name').value=result.data.name;
+                    document.getElementById('sale').value=result.data.sale;
+                }
+            },
+            error: function (errorMsg) {
+            }
+        });
+    }
+    function talk() {
+        if(Object.is(document.getElementById('userId').value, userInfo.id)){
+            alert("不能和自己聊天");
+            return;
+        }
+        sessionStorage.removeItem("getId");
+        sessionStorage.setItem("getId", document.getElementById('userId').value);
+        window.location.href = 'talk.html';
+    }
+    function comment() {
+        var comment={
+            id :  "",
+            userName :  $("#userName").val(),
+            context :  $("#context").val(),
+            houseId :  $("#houseId").val(),
+            time :  ""
+        }
+        $.ajax({
+            type : "POST",
+            async: true,
+            url : "comment/create",
+            dataType : "json",        //返回数据形式为json
+            contentType : 'application/json; charset=UTF-8',
+            data: JSON.stringify(comment),
+            success : function(result) {
+                if (result.status == 200) {
+                    alert(result.msg);
+                    if(result.msg=="创建成功"){
+                        window.location.href = 'houseInfoDetail.html';
+                    }
+                }
+            },
+            error : function(errorMsg) {
+            }
+        });
+    }
+    function buy() {
+        if(Object.is(document.getElementById('userId').value, userInfo.id)){
+            alert("不能购买自己的产品");
+            return;
+        }
+        $.ajax({
+            type : "PUT",
+            async: true,
+            url : "house/addSale",
+            dataType : "json",        //返回数据形式为json
+            data: {"id": houseId},
+            success : function(result) {
+                if (result.status == 200) {
+                    alert(result.msg);
+                    if(result.msg=="购买成功"){
+                        window.location.href = 'houseInfoDetail.html';
+                    }
+                }
+            },
+            error : function(errorMsg) {
+            }
+        });
+    }
+</script>
+
+</html>

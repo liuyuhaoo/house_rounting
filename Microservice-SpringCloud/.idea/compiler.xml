@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="microservice-config-server" />
+        <module name="microservice-eureka-comment" />
+        <module name="microservice-gateway-zuul" />
+        <module name="microservice-eureka-house" />
+        <module name="Microservice-eureka-order" />
+        <module name="Microservice-eureka-user-hystrix" />
+        <module name="microservice-eureka-talk" />
+        <module name="microservice-eureka-user" />
+        <module name="Microservice-eureka-user" />
+        <module name="microservice-eureka-userhouserelation" />
+        <module name="Microservice-eureka-server" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="microservice-config-client" target="1.8" />
+      <module name="Microservice-eureka-order (1)" target="1.8" />
+      <module name="Microservice-eureka-order (2)" target="1.8" />
+      <module name="Microservice-eureka-product" target="1.8" />
+      <module name="tooll" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Microservice-eureka-order" options="-parameters" />
+      <module name="Microservice-eureka-order (1)" options="-parameters" />
+      <module name="Microservice-eureka-order (2)" options="-parameters" />
+      <module name="Microservice-eureka-product" options="-parameters" />
+      <module name="Microservice-eureka-server" options="-parameters" />
+      <module name="Microservice-eureka-user" options="" />
+      <module name="Microservice-eureka-user-hystrix" options="-parameters" />
+      <module name="microservice-config-client" options="-parameters" />
+      <module name="microservice-config-server" options="-parameters" />
+      <module name="microservice-eureka-comment" options="" />
+      <module name="microservice-eureka-house" options="" />
+      <module name="microservice-eureka-talk" options="" />
+      <module name="microservice-gateway-zuul" options="-parameters" />
+    </option>
+  </component>
+</project>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.microserviceeurekahouse.mapper.HouseInfoMapper">
+    <select id="queryHouseInfoVO" parameterType="java.lang.String" resultType="com.example.microserviceeurekahouse.entity.HouseInfoVO">
+        select h.id as houseId,
+               h.title,
+               h.address,
+               h.price,
+               h.sale,
+               h.time,
+               u.id as userId,
+               u.name
+        from house_info h
+                 left join user_house_relation uhr  on h.id = uhr.houseId
+                 left join user_info u  on u.id = uhr.userId
+        where houseId = #{houseId};
+    </select>
+    <select id="listByUserId" parameterType="com.example.microserviceeurekahouse.vo.HouseInfoQueryVO" resultType="com.example.microserviceeurekahouse.entity.HouseInfoVO">
+        select h.id as houseId,
+               h.title,
+               h.address,
+               h.price,
+               h.sale,
+               h.time,
+               uhr.userId,
+               u.name
+        from house_info h
+                 left join user_house_relation uhr  on h.id = uhr.houseId
+                 left join user_info u  on u.id = uhr.userId
+        where uhr.userId=#{userId}
+        and h.title like CONCAT('%',#{keyword},'%')
+        order by #{orderBy};
+    </select>
+    <update id="addSale" parameterType="java.lang.String">
+        update house_info
+        <set>
+            sale = sale + 1  where id = #{id};
+        </set>
+    </update>
+</mapper>

@@ -1,0 +1,32 @@
+server:
+  port: 8050 # 指定该Eureka实例的端口号
+eureka:
+  instance:
+    prefer-ip-address: true  # ???????IP
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+#      defaultZone: http://192.168.109.134:8761/eureka/
+spring:
+  application:
+    name: microservice-gateway-zuul # 指定应用名称
+
+zuul:
+  routes:
+    order-serviceId: # zuul的唯一标识
+#      path: /order/**   # 需要映射的路径
+#      service-id: microservice-eureka-product
+      path: /order-url/**
+      url: http://localhost:8001/
+    house: #
+      path: /house/**   # 需要映射的路径
+      service-id: microservice-eureka-house
+    user: #
+      path: /user/**   # 需要映射的路径
+      service-id: microservice-eureka-user
+    talk: #
+      path: /talk/**   # 需要映射的路径
+      service-id: microservice-eureka-talk
+    comment: #
+      path: /comment/**   # 需要映射的路径
+      service-id: microservice-eureka-comment

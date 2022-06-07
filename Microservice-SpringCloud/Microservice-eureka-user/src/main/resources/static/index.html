@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script>
+    $.ajax({
+        type : "GET",
+        async: true,
+        url : "list",
+        dataType : "json",        //返回数据形式为json
+        success : function(result) {
+            var str = "";
+            var data = result.data;
+            for(var i=0;i<data.length ;i++){
+                str += "<tr>" +
+                    "<td>" + data[i].id + "</td>" +
+                    "<td>" + data[i].name + "</td>" +
+                    "<td>" + data[i].password + "</td>" +
+                    "<td>" + data[i].idcard + "</td>" +
+                    "<td>" + data[i].phone + "</td>" +
+                    "<td>" + data[i].email + "</td>" +
+                    "<td>" + data[i].realName + "</td>" +
+                    "</tr>";
+            }
+            console.log(str);
+            $("#t_body").append(str);
+        },
+        error : function(errorMsg) {
+
+        }
+    });
+</script>
+<body>
+<table  style="height:400px;margin-bottom: 0px;" class="table table-bordered">
+    <thead>
+    <tr>
+        <th>id</th>
+        <th>账号</th>
+        <th>密码</th>
+        <th>身份证</th>
+        <th>手机</th>
+        <th>邮箱</th>
+        <th>真实姓名</th>
+    </tr>
+    </thead>
+    <tbody id="t_body">
+
+    </tbody>
+</table>
+</body>
+
+</html>

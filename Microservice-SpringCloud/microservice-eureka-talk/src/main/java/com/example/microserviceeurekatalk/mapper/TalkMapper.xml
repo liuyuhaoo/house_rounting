@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.microserviceeurekatalk.mapper.TalkMapper">
+    <select id="queryTalk" parameterType="com.example.microserviceeurekatalk.entity.Talk" resultType="com.example.microserviceeurekatalk.vo.TalkVO">
+        select
+            t.context,
+            u.name,
+            t.time
+        from talk t
+                 left join user_info u on postId = u.id
+        where (getId = #{getId} and postId = #{postId}) or (getId = #{postId} and postId = #{getId})
+        order by time;
+
+    </select>
+</mapper>

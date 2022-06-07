@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script type="text/javascript" src="../js/jquery.min.js" ></script>
+<script>
+</script>
+<body onload="init()">
+<form id="form1" onsubmit="return false" action="##" >
+    标题<input type="text" id="title"></br>
+    地址<input type="text" id="address"></br>
+    价格<input type="text" id="price"></br>
+    发布者<input type="text" id="name"></br>
+    <input type="hidden" id="id"></br>
+    <input type="button" value="确认" onclick="update()">
+</form>
+</body>
+<script>
+    houseId = sessionStorage.getItem("updateHouseId");
+    function init() {
+        $.ajax({
+            type: "GET",
+            async: true,
+            url: "house/query",
+            dataType: "json",        //返回数据形式为json
+            data: {"id": houseId},
+            success: function (result) {
+                console.log(result);//打印服务端返回的数据(调试用)
+                if (result.status == 200) {
+                    document.getElementById('title').value=result.data.title;
+                    document.getElementById('address').value=result.data.address;
+                    document.getElementById('price').value=result.data.price;
+                    document.getElementById('id').value=result.data.houseId;
+                    document.getElementById('name').value=result.data.name;
+                }
+            },
+            error: function (errorMsg) {
+            }
+        });
+    }
+    function update() {
+        var houseInfo={
+            id :  $("#id").val(),
+            title :  $("#title").val(),
+            address :  $("#address").val(),
+            price :  $("#price").val()
+        }
+        $.ajax({
+            url: 'house/update',
+            method: 'PUT',
+            dataType: 'json',
+            contentType : 'application/json; charset=UTF-8',
+            data: JSON.stringify(houseInfo),
+            success: function (result) {
+                console.log(result);//打印服务端返回的数据(调试用)
+                if (result.status == 200) {
+                    alert(result.msg);
+                    if(result.msg=="修改成功"){
+                        window.location.href = 'updateHouseInfo.html';
+                    }
+                }
+            },
+            error: function () {
+                alert("异常！");
+            }
+        })
+    }
+</script>
+
+
+</html>

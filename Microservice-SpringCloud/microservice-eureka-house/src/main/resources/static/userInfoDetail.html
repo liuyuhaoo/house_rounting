@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script>
+  $.ajax({
+    type : "GET",
+    async: true,
+    url : "getHouseIdSession",
+    dataType : "json",        //返回数据形式为json
+    success : function(result) {
+      document.getElementById('title').value=result.data.title;
+      document.getElementById('address').value=result.data.address;
+      document.getElementById('price').value=result.data.price;
+      document.getElementById('id').value=result.data.id;
+    },
+    error : function(errorMsg) {
+
+    }
+  });
+</script>
+<body>
+<input type="hidden" id="id" name="id">
+标题<input type="text" id="title"></br>
+地址<input type="text" id="address"></br>
+价格<input type="text" id="price"></br>
+</body>
+<script>
+
+</script>
+
+</html>

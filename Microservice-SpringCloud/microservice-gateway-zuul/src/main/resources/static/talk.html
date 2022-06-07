@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script type="text/javascript" src="../js/jquery.min.js" ></script>
+<script>
+    getId = sessionStorage.getItem("getId");
+    userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
+        $.ajax({
+            type : "GET",
+            async: true,
+            url : "talk/list",
+            dataType : "json",        //返回数据形式为json
+            data: {"getId" : getId,
+                "postId" : userInfo.id},
+            success : function(result) {
+                var str = "";
+                var data = result.data;
+                for(var i=0;i<data.length ;i++){
+                    str += "<tr>" +
+                        "<td>" + data[i].context + "</td>" +
+                        "<td>" + data[i].name + "</td>" +
+                        "<td>" + data[i].time + "</td>" +
+                        "</tr>";
+                }
+                $("#t_body").html("");
+                $("#t_body").append(str);
+            },
+            error : function(errorMsg) {
+
+            }
+        })
+
+</script>
+<body>
+<table  style="height:400px;margin-bottom: 0px;" class="table table-bordered">
+    <thead>
+    <tr>
+        <th>内容</th>
+        <th>账号</th>
+        <th>时间</th>
+    </tr>
+    </thead>
+    <tbody id="t_body">
+    </tbody>
+</table>
+<form id="form1" onsubmit="return false" action="##" >
+    <input type="text" id="context" name="context">
+    <input type="hidden" id="postId" name="postId"></br>
+    <input type="hidden" id="getId" name="getId"></br>
+    <input type="button" value="提交" onclick="create()">
+</form>
+</body>
+<script>
+    getId = sessionStorage.getItem("getId");
+    userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
+    document.getElementById('postId').value=userInfo.id;
+    document.getElementById('getId').value=getId;
+    function create() {
+        $.ajax({
+            url: 'talk/create',
+            method: 'POST',
+            dataType: 'json',
+            data: $('#form1').serialize(),
+            success: function (result) {
+                console.log(result);//打印服务端返回的数据(调试用)
+                if (result.status == 200) {
+                    alert(result.msg);
+                    if(result.msg=="创建成功"){
+                        window.location.href = 'talk.html';
+                    }
+                }
+            },
+            error: function () {
+                alert("异常！");
+            }
+        })
+    }
+</script>
+
+</html>

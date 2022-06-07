@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script type="text/javascript" src="../js/jquery.min.js" ></script>
+<body>
+<form id="form1" onsubmit="return false" action="##" >
+    账号<input type="text" name="name" id="name"/><br>
+    密码<input type="text" name="password" id="password"/><br>
+    <input type="button" value="提交" onclick="register()">
+</form>
+</body>
+
+<script>
+    function register() {
+        $.ajax({
+            url: 'user/register',
+            method: 'POST',
+            dataType: 'json',
+            data: $('#form1').serialize(),
+            success: function (result) {
+                console.log(result);//打印服务端返回的数据(调试用)
+                if (result.status == 200) {
+                    alert(result.msg);
+                    if(result.msg=="注册成功"){
+                        sessionStorage.removeItem("userInfo");
+                        sessionStorage.setItem("userInfo", JSON.stringify(result.data));
+                        window.location.href = 'main.html';
+                    }
+                }
+            },
+            error: function () {
+                alert("异常！");
+            }
+        })
+    }
+</script>
+</html>

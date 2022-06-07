@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>主页</title>
+</head>
+<script type="text/javascript" src="../js/jquery.min.js" ></script>
+<script>
+</script>
+<body>
+用户名<input type="text" id="name"></br>
+<a href="userInfo.html">个人资料</a>
+<a href="house.html">租房信息</a>
+</body>
+<script>
+    userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
+    document.getElementById('name').value=userInfo.name;
+</script>
+
+
+</html>

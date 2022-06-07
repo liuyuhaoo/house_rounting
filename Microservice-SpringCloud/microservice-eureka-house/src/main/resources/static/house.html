@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script>
+    function order() {
+        $.ajax({
+            type : "GET",
+            async: true,
+            url : "list",
+            dataType : "json",        //返回数据形式为json
+            data: $('#form1').serialize(),
+            success : function(result) {
+                var str = "";
+                var data = result.data;
+                for(var i=0;i<data.length ;i++){
+                    str += "<tr>" +
+                        "<td>" + data[i].title + "</td>" +
+                        "<td>" + data[i].price + "</td>" +
+                        "<td>" + data[i].time + "</td>" +
+                        "<td><a href=\"javascript:detail(\'"+data[i].id+"')\">查看详情</a></td>"
+                        +"</tr>";
+                }
+                console.log(str);
+                // document.getElementById('t_body').value='';
+                $("#t_body").append(str);
+            },
+            error : function(errorMsg) {
+
+            }
+        })
+    }
+</script>
+<body onload="order()">
+<form id="form1" onsubmit="return false" action="##" >
+    关键词<input type="text" name="keyword" id="keyword"/><br>
+    排序方式：</br>
+    按热度排序<input type="radio" name="orderBy" id="orderBy1" value=""/><br>
+    按时间排序<input type="radio" name="orderBy" id="orderBy2" value="time"/><br>
+    按价格排序<input type="radio" name="orderBy" id="orderBy3" value="price"/><br>
+    <input type="button" value="提交" onclick="order()">
+</form>
+<table  style="height:400px;margin-bottom: 0px;" class="table table-bordered">
+    <thead>
+    <tr>
+        <th>标题</th>
+        <th>价格</th>
+        <th>时间</th>
+        <th>详情</th>
+    </tr>
+    </thead>
+    <tbody id="t_body">
+    </tbody>
+</table>
+</body>
+<script>
+    function detail(houseId) {
+        $.ajax({
+            url : "setHouseIdSession",
+            method: 'POST',
+            dataType: 'json',
+            data: {"houseId": houseId},
+            success: function (msg) {
+                if (msg) {
+                    window.location.href = 'userInfoDetail.html';
+                }
+            },
+            error: function () {
+                alert("异常！");
+            }
+        })
+    }
+
+</script>
+
+</html>

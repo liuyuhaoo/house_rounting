@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script type="text/javascript" src="../js/jquery.min.js" ></script>
+<script>
+</script>
+<body>
+<input type="hidden" id="id" name="id">
+用户名<input type="text" id="name"></br>
+身份证<input type="text" id="idcard"></br>
+手机号<input type="text" id="phone"></br>
+电子邮箱<input type="text" id="email"></br>
+真实姓名<input type="text" id="realName"></br>
+<a href="updateUserInfo.html">修改个人资料</a>
+<a href="updatePassword.html">修改密码</a>
+</body>
+<script>
+    userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
+    document.getElementById('name').value = userInfo.name;
+    document.getElementById('idcard').value = userInfo.idcard;
+    document.getElementById('phone').value = userInfo.phone;
+    document.getElementById('email').value = userInfo.email;
+    document.getElementById('realName').value = userInfo.realName;
+    document.getElementById('id').value = userInfo.id;
+</script>
+
+
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>主页</title>
+</head>
+<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script>
+    $.ajax({
+        "url" : "getUserSession",
+        "method" : "GET"
+    }).success(function(result){
+        console.log(result);//打印服务端返回的数据(调试用)
+        document.getElementById('name').value=result.data.name;
+    })
+</script>
+<body>
+用户名<input type="text" id="name"></br>
+<a href="userInfo.html">个人资料</a>
+<a href="http://localhost:8082/house.html">租房信息</a>
+</body>
+<script>
+
+</script>
+
+
+</html>
