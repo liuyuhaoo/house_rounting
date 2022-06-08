@@ -26,13 +26,16 @@ public class Talk {
     @TableField("time")
     @ApiModelProperty(value="时间")
     private Date time;
+    @TableField("readed")
+    @ApiModelProperty(value="是否已读")
+    private int readed;
     public Talk(){
     }
     public Talk(String getId, String postId){
         this.getId = getId;
         this.postId = postId;
     }
-    public Talk(String getId, String postId, String context){
+    public Talk(String getId, String postId, String context, int readed){
         this.getId = getId;
         this.postId = postId;
         this.context = context;

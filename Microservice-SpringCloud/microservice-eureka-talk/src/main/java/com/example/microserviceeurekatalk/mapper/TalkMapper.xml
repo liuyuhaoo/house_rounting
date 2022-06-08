@@ -12,4 +12,13 @@
         order by time;
 
     </select>
+    <select id="queryUserUnRead" parameterType="java.lang.String" resultType="com.example.microserviceeurekatalk.vo.UserInfoVO">
+        select distinct
+            u.id,
+            name
+        from user_info u
+                 left join talk t on postId = u.id
+        where getId = #{getId}
+            order by t.readed desc
+    </select>
 </mapper>

@@ -13,8 +13,8 @@
             async: true,
             url : "talk/list",
             dataType : "json",        //返回数据形式为json
-            data: {"getId" : getId,
-                "postId" : userInfo.id},
+            data: {"getId" : userInfo.id,
+                "postId" : getId},
             success : function(result) {
                 var str = "";
                 var data = result.data;
