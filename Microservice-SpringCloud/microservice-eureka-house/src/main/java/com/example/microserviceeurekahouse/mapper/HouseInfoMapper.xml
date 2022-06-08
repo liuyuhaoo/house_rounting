@@ -26,15 +26,33 @@
                u.name
         from house_info h
                  left join user_house_relation uhr  on h.id = uhr.houseId
-                 left join user_info u  on u.id = uhr.userId
-        where uhr.userId=#{userId}
+                 left join user_info u on u.id = uhr.userId
+        where 1=1
+        <if test="userId!=null and userId!=''">
+        and uhr.userId=#{userId}
+        </if>
         and h.title like CONCAT('%',#{keyword},'%')
+        <if test="status!=0">
+            and h.status =#{status}
+        </if>
         order by #{orderBy};
     </select>
     <update id="addSale" parameterType="java.lang.String">
         update house_info
         <set>
             sale = sale + 1  where id = #{id};
+        </set>
+    </update>
+    <update id="pass" parameterType="java.lang.String">
+        update house_info
+        <set>
+            status = 1  where id = #{id};
+        </set>
+    </update>
+    <update id="unpass" parameterType="java.lang.String">
+        update house_info
+        <set>
+            status = 3  where id = #{id};
         </set>
     </update>
 </mapper>

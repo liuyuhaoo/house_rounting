@@ -32,8 +32,8 @@ class MicroserviceEurekaUserApplicationTests {
     }
     @Test
     void register() {
-        System.out.println(userInfoController.register("admin", "123").getMsg());
-        System.out.println(userInfoController.register("liuyuhao","123456").getMsg());
+        System.out.println(userInfoController.register("admin", "123",1).getMsg());
+        System.out.println(userInfoController.register("liuyuhao","123456",2).getMsg());
     }
     @Test
     void info() {

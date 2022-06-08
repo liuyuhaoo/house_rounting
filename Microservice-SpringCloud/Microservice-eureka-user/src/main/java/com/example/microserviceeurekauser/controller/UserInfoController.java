@@ -61,7 +61,8 @@ public class UserInfoController {
     @ApiOperation(value="用户注册", notes="用户注册")
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public Result register(@RequestParam String name,
-                           @RequestParam String password){
+                           @RequestParam String password,
+                           @RequestParam int type){
         Result result = new Result(null);
         if(name.length() < 1 || password.length() < 1){
             result.setMsg("输入不能为空");
@@ -74,7 +75,7 @@ public class UserInfoController {
             result.setMsg("用户名已存在");
             return result;
         }
-        UserInfo userInfo = new UserInfo(name,password);
+        UserInfo userInfo = new UserInfo(name, password, type);
         userInfoMapper.insert(userInfo);
         UserInfoVO userInfoVO = new UserInfoVO(userInfo);
         result.setMsg("注册成功");

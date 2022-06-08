@@ -11,7 +11,7 @@
  Target Server Version : 80029
  File Encoding         : 65001
 
- Date: 07/06/2022 10:28:44
+ Date: 07/06/2022 21:14:47
 */
 
 SET NAMES utf8mb4;
@@ -48,15 +48,16 @@ CREATE TABLE `house_info`  (
   `price` decimal(10, 2) NOT NULL COMMENT '价格',
   `time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `sale` int(0) NULL DEFAULT 0 COMMENT '销量',
+  `status` int(0) NULL DEFAULT NULL COMMENT '审核状态1通过，2未通过，3审核失败',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of house_info
 -- ----------------------------
-INSERT INTO `house_info` VALUES ('1', '学生宿舍', '广州城市理工学院C16', 809.00, '2022-05-21 23:49:26', 3);
-INSERT INTO `house_info` VALUES ('2', '豪华上下床四人间', '广州城市理工学院C16-363', 750.00, '2022-05-22 15:49:02', 0);
-INSERT INTO `house_info` VALUES ('3', '豪华上下床四人间', '广州城市理工学院C16-364', 770.00, '2022-05-25 11:40:06', 0);
+INSERT INTO `house_info` VALUES ('1', '学生宿舍', '广州城市理工学院C16', 809.00, '2022-05-21 23:49:26', 3, 1);
+INSERT INTO `house_info` VALUES ('2', '豪华上下床四人间', '广州城市理工学院C16-363', 750.00, '2022-05-22 15:49:02', 0, 2);
+INSERT INTO `house_info` VALUES ('3', '豪华上下床四人间', '广州城市理工学院C16-364', 770.00, '2022-05-25 11:40:06', 0, 1);
 
 -- ----------------------------
 -- Table structure for talk
@@ -112,14 +113,15 @@ CREATE TABLE `user_info`  (
   `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '邮箱',
   `realName` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '姓名',
   `time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `type` int(0) NULL DEFAULT NULL COMMENT '账号类型1租客2房东3管理员',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user_info
 -- ----------------------------
-INSERT INTO `user_info` VALUES ('1', 'admin', '123', '441423200103172717', '13417345898', '1967877060@qq.com', '管理', '2022-05-25 22:35:49');
-INSERT INTO `user_info` VALUES ('2', 'liuyuhao', '123', '441423200103172711', '13417345898', '1967877060@qq.com', '用户一', '2022-05-25 22:35:39');
-INSERT INTO `user_info` VALUES ('3', 'lyh', '123', '441423200103172717', '13417345898', '1967877060@qq.com', '用户二', '2022-05-25 22:35:45');
+INSERT INTO `user_info` VALUES ('1', 'admin', '123', '441423200103172717', '13417345898', '1967877060@qq.com', '管理', '2022-05-25 22:35:49', 2);
+INSERT INTO `user_info` VALUES ('2', 'liuyuhao', '123', '441423200103172711', '13417345898', '1967877060@qq.com', '用户一', '2022-05-25 22:35:39', 1);
+INSERT INTO `user_info` VALUES ('3', 'lyh', '123', '441423200103172717', '13417345898', '1967877060@qq.com', '用户二', '2022-05-25 22:35:45', 3);
 
 SET FOREIGN_KEY_CHECKS = 1;

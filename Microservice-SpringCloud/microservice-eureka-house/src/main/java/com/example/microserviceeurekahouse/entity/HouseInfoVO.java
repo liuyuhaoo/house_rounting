@@ -35,9 +35,12 @@ public class HouseInfoVO {
     @TableField("sale")
     @ApiModelProperty(value="销量")
     private int sale;
+    @TableField("status")
+    @ApiModelProperty(value="审核状态")
+    private int status;
     public HouseInfoVO(){
     }
-    public HouseInfoVO(String houseId, String title, String address, Double price, String userId, String name, int sale){
+    public HouseInfoVO(String houseId, String title, String address, Double price, String userId, String name, int sale, int status){
         this.houseId = houseId;
         this.title = title;
         this.address = address;
@@ -46,6 +49,7 @@ public class HouseInfoVO {
         this.userId = userId;
         this.name = name;
         this.sale = sale;
+        this.status = status;
     }
 
 

@@ -20,6 +20,9 @@ public class UserInfoVO implements Serializable {
     private String email;
     @TableField("realName")
     private String realName;
+    @TableField("type")
+    private int type;
+
 
     public UserInfoVO(){
     }
@@ -30,5 +33,6 @@ public class UserInfoVO implements Serializable {
         this.idcard = userInfo.getIdcard();
         this.phone = userInfo.getPhone();
         this.realName = userInfo.getRealName();
+        this.type = userInfo.getType();
     }
 }
