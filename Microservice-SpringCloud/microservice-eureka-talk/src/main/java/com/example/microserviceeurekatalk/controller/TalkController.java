@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.microserviceeurekatalk.entity.Result;
 import com.example.microserviceeurekatalk.entity.Talk;
 import com.example.microserviceeurekatalk.mapper.TalkMapper;
+import com.example.microserviceeurekatalk.vo.UserInfoVO;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -33,7 +34,7 @@ public class TalkController {
                 || postId.length() < 1){
             return new Result("输入不能为空") ;
         }
-        Talk talk = new Talk(getId, postId, context);
+        Talk talk = new Talk(getId, postId, context, 2);
         talk.setTime(new Date());
         talkMapper.insert(talk);
         Result result = new Result(talk);
@@ -87,6 +88,26 @@ public class TalkController {
                        @RequestParam String postId){
         Talk talk = new Talk(getId, postId);
         List<Talk> list = talkMapper.queryTalk(talk);
+
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("getId", getId);
+        queryWrapper.eq("postId", postId);
+        List<Talk> getList = talkMapper.selectList(queryWrapper);
+        for(int i = 0;i<getList.size();i++){
+            getList.get(i).setReaded(1);//打开以后就是已读
+            talkMapper.updateById(getList.get(i));
+        }
+        return new Result(list);
+    }
+
+    /**
+     * 获取有未读聊天的用户
+     * @return
+     */
+    @ApiOperation(value="获取有未读聊天的用户", notes="获取有未读聊天的用户")
+    @RequestMapping(value = "/listUser", method = RequestMethod.GET)
+    public Result listUser(@RequestParam String getId){
+        List<UserInfoVO> list = talkMapper.queryUserUnRead(getId);
         return new Result(list);
     }
 

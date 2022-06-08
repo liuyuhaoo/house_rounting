@@ -33,5 +33,10 @@ public class HouseInfoQueryVO {
         this.orderBy = orderBy;
         this.status = status;
     }
+    public HouseInfoQueryVO(String userId, String orderBy, String keyword){
+        this.userId = userId;
+        this.keyword = keyword;
+        this.orderBy = orderBy;
+    }
 
 }

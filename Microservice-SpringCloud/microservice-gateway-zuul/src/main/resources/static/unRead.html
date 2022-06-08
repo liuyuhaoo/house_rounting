@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script type="text/javascript" src="../js/jquery.min.js" ></script>
+<script>
+
+</script>
+<body onload="order()">
+<h3>以下用户向你发送了消息，按最新时间排序</h3>
+<table  style="height:400px;margin-bottom: 0px;" class="table table-bordered">
+    <thead>
+    <tr>
+        <th>用户名</th>
+        <th>最后一次聊天时间</th>
+    </tr>
+    </thead>
+    <tbody id="t_body">
+    </tbody>
+</table>
+</body>
+<script>
+    function order() {
+        userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
+        $.ajax({
+            type : "GET",
+            async: true,
+            url : "talk/listUser",
+            dataType : "json",        //返回数据形式为json
+            data: {"getId" : userInfo.id},
+            success : function(result) {
+                console.log(result);
+                var str = "";
+                var data = result.data;
+                for(var i=0;i<data.length ;i++){
+                    str += "<tr>" +
+                        "<td><a href=\"javascript:detail(\'"+data[i].id+"')\">" + data[i].name + "</a></td>" +
+                        "</tr>";
+                }
+                $("#t_body").html("");
+                $("#t_body").append(str);
+            },
+            error : function(errorMsg) {
+
+            }
+        })
+    }
+    function detail(getId) {
+        sessionStorage.removeItem("getId");
+        sessionStorage.setItem("getId", getId);
+        window.location.href = 'talk.html';
+    }
+
+</script>
+
+</html>

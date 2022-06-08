@@ -42,6 +42,7 @@
 <input type="hidden" id="userId"></br>
 <a href="javascript:talk()">和ta聊聊</a></br>
 <a href="javascript:buy()">购买</a>
+<a href="javascript:collect()">收藏</a>
 
 <table  style="height:400px;margin-bottom: 0px;" class="table table-bordered">
     <thead>
@@ -141,6 +142,29 @@
                 if (result.status == 200) {
                     alert(result.msg);
                     if(result.msg=="购买成功"){
+                        window.location.href = 'houseInfoDetail.html';
+                    }
+                }
+            },
+            error : function(errorMsg) {
+            }
+        });
+    }
+    function collect() {
+        if(Object.is(document.getElementById('userId').value, userInfo.id)){
+            alert("不能收藏自己的产品");
+            return;
+        }
+        $.ajax({
+            type : "PUT",
+            async: true,
+            url : "house/collect",
+            dataType : "json",        //返回数据形式为json
+            data: {"houseId" : houseId, "userId" : userInfo.id},
+            success : function(result) {
+                if (result.status == 200) {
+                    alert(result.msg);
+                    if(result.msg=="收藏成功"){
                         window.location.href = 'houseInfoDetail.html';
                     }
                 }

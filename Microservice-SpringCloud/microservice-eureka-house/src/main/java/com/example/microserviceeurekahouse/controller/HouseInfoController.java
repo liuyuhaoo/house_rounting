@@ -1,14 +1,14 @@
 package com.example.microserviceeurekahouse.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.example.microserviceeurekahouse.entity.Collect;
+import com.example.microserviceeurekahouse.mapper.CollectMapper;
 import com.example.microserviceeurekahouse.vo.HouseInfoQueryVO;
 import com.example.microserviceeurekahouse.entity.HouseInfoVO;
 import com.example.microserviceeurekahouse.entity.Result;
 import com.example.microserviceeurekahouse.entity.HouseInfo;
 import com.example.microserviceeurekahouse.mapper.HouseInfoMapper;
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import io.swagger.annotations.ApiOperation;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
@@ -23,6 +23,8 @@ import java.util.List;
 public class HouseInfoController {
     @Autowired
     HouseInfoMapper houseInfoMapper;
+    @Autowired
+    CollectMapper collectMapper;
     @Autowired
     @LoadBalanced
     RestTemplate restTemplate;
@@ -129,6 +131,22 @@ public class HouseInfoController {
         return new Result(list);
     }
 
+
+    /**
+     * 获取用户所有租房信息
+     * @return
+     */
+    @ApiOperation(value="获取用户所有租房信息", notes="获取用户所有租房信息")
+    @RequestMapping(value = "/listByUserIdCollect", method = RequestMethod.GET)
+    public Result listByUserIdCollect(@RequestParam(value = "keyword", defaultValue = "",required = false) String keyword,
+                               @RequestParam(value = "orderBy", defaultValue = "", required = false) String orderBy,
+                               @RequestParam(value = "userId", defaultValue = "", required = false) String userId) throws InterruptedException {
+        System.out.println(keyword+orderBy+userId);
+        HouseInfoQueryVO houseInfoQueryVO = new HouseInfoQueryVO(userId, orderBy, keyword);
+        List<HouseInfo> list = houseInfoMapper.listByUserIdCollect(houseInfoQueryVO);
+        return new Result(list);
+    }
+
     /**
      * 增加销量
      * @return
@@ -159,7 +177,7 @@ public class HouseInfoController {
      * 审核不通过
      * @return
      */
-    @ApiOperation(value="审核不通过", notes="审核吧通过")
+    @ApiOperation(value="审核不通过", notes="审核不通过")
     @RequestMapping(value = "/unpass", method = RequestMethod.PUT)
     public Result unpass(@RequestParam(value = "id", defaultValue = "",required = false) String id) throws InterruptedException {
         houseInfoMapper.unpass(id);
@@ -167,6 +185,47 @@ public class HouseInfoController {
         result.setMsg("审核不通过");
         return result;
     }
+
+    /**
+     * 收藏
+     * @return
+     */
+    @ApiOperation(value="收藏", notes="收藏")
+    @RequestMapping(value = "/collect", method = RequestMethod.PUT)
+    public Result collect(@RequestParam(value = "userId", defaultValue = "",required = false) String userId,
+                       @RequestParam(value = "houseId", defaultValue = "",required = false) String houseId) throws InterruptedException {
+        Result result = new Result("");
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("userId", userId);
+        queryWrapper.eq("houseId", houseId);
+        Collect collectQ =  collectMapper.selectOne(queryWrapper);
+        if(collectQ!=null){
+            result.setMsg("已经收藏过了");
+            return result;
+        }
+        Collect collect = new Collect(userId, houseId);
+        collectMapper.insert(collect);
+
+        result.setMsg("收藏成功");
+        return result;
+    }
+    /**
+     * 取消收藏
+     * @return
+     */
+    @ApiOperation(value="取消收藏", notes="取消收藏")
+    @RequestMapping(value = "/deleteCollect", method = RequestMethod.DELETE)
+    public Result deleteCollect(@RequestParam(value = "userId", defaultValue = "",required = false) String userId,
+                       @RequestParam(value = "houseId", defaultValue = "",required = false) String houseId) throws InterruptedException {
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("userId", userId);
+        queryWrapper.eq("houseId", houseId);
+        collectMapper.delete(queryWrapper);
+        Result result = new Result("");
+        result.setMsg("取消成功");
+        return result;
+    }
+
 
     public Result fallbackInfo(@PathVariable("id") String id){
         Result result = new Result();

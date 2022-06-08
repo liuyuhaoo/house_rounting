@@ -13,7 +13,7 @@ class MicroserviceEurekaTalkApplicationTests {
     @Test
     void contextLoads() {
     }
-    Talk talk = new Talk("66","2", "测试");
+    Talk talk = new Talk("66","2", "测试",2);
     @Test
     void Ccreate(){
         Talk talk = (Talk) talkController.create("66","2", "测试").getData();
