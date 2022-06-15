@@ -146,7 +146,7 @@ public class UserInfoController {
         if(userInfoTrue.getPassword().equals(oldPassword)) {
             userInfoTrue.setPassword(newPassword);
             userInfoMapper.updateById(userInfoTrue);
-            result.setMsg("修改成功");
+            result.setMsg("修改成功，即将返回登录页面");
             return result;
         }
         else {
