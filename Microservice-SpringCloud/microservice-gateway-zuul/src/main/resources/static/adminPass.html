@@ -167,8 +167,8 @@
                     <th style="width: 15%">价格</th>
                     <th style="width: 30%">时间</th>
                     <th style="width: 10%">销量</th>
-                    <th style="width: 10%">通过</th>
-                    <th style="width: 10%">不通过</th>
+                    <th style="width: 10%; text-align: center">通过</th>
+                    <th style="width: 10%; text-align: center">不通过</th>
                 </tr>
                 </thead>
                 <tbody id="t_body">
@@ -251,8 +251,8 @@
                         "<td style='vertical-align: middle'>" + data[i].price + "</td>" +
                         "<td style='vertical-align: middle'>" + data[i].time + "</td>" +
                         "<td style='vertical-align: middle'>" + data[i].sale + "</td>" +
-                        "<td style='text-align: center; vertical-align: middle'><a href=\"javascript:pass(\'"+data[i].houseId+"')\" style='text-align: center' class='btn btn-success'>通过</a></td>" +
-                        "<td style='text-align: center; vertical-align: middle'><a href=\"javascript:unpass(\'"+data[i].houseId+"')\" style='text-align: center' class='btn btn-danger'>不通过</a></td>" +
+                        "<td style='text-align: center; vertical-align: middle'><a href=\"javascript:pass(\'"+data[i].houseId+"')\" style='text-align: center' class='btn btn-success'><i class='fas fa-check'></i></a></td>" +
+                        "<td style='text-align: center; vertical-align: middle'><a href=\"javascript:unpass(\'"+data[i].houseId+"')\" style='text-align: center' class='btn btn-danger'><i class='fas fa-close'></i></a></td>" +
                         "</tr>";
                 }
                 $("#t_body").html("");
