@@ -17,6 +17,7 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 <script type="text/javascript" src="../js/jquery.min.js" ></script>
 <script>
@@ -184,7 +185,7 @@
                     <th style="width: 15%">价格</th>
                     <th style="width: 30%">时间</th>
                     <th style="width: 15%">销量</th>
-                    <th style="width: 15%; text-align: center">操作</th>
+                    <th style="width: 15%; text-align: center">取消收藏</th>
                 </tr>
                 </thead>
                 <tbody id="t_body">
@@ -267,7 +268,7 @@
                         "<td style='vertical-align: middle'>" + data[i].price + "</td>" +
                         "<td style='vertical-align: middle'>" + data[i].time + "</td>" +
                         "<td style='vertical-align: middle'>" + data[i].sale + "</td>" +
-                        "<td style='text-align: center; vertical-align: middle'><a href=\"javascript:detele(\'"+data[i].houseId+"')\" style='text-align: center' class='btn btn-danger'>取消收藏</a></td>" +
+                        "<td style='text-align: center; vertical-align: middle'><a href=\"javascript:detele(\'"+data[i].houseId+"')\" style='text-align: center' class='btn btn-danger'><i class=\"fas fa-heart-broken\"></i></a></td>" +
                         "</tr>";
                 }
                 $("#t_body").html("");

@@ -222,7 +222,7 @@ public class HouseInfoController {
         queryWrapper.eq("houseId", houseId);
         collectMapper.delete(queryWrapper);
         Result result = new Result("");
-        result.setMsg("取消成功");
+        result.setMsg("取消收藏成功");
         return result;
     }
 
