@@ -16,5 +16,8 @@
     <file url="file://$PROJECT_DIR$/microservice-gateway-zuul/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
+    <file url="file://D:/maven/maven-repository/org/springframework/boot/spring-boot-starter-parent/2.0.3.RELEASE/src/main/resources" charset="UTF-8" />
+    <file url="file://D:/maven/maven-repository/org/springframework/boot/spring-boot-starter-parent/2.1.3.RELEASE/src/main/resources" charset="UTF-8" />
+    <file url="file://D:/maven/maven-repository/org/springframework/boot/spring-boot-starter-parent/2.6.4/src/main/resources" charset="UTF-8" />
   </component>
 </project>
