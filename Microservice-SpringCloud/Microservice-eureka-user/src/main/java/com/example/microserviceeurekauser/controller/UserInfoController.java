@@ -62,10 +62,25 @@ public class UserInfoController {
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public Result register(@RequestParam String name,
                            @RequestParam String password,
-                           @RequestParam int type){
+                           @RequestParam(value="type",defaultValue = "0",required = false) int type){
         Result result = new Result(null);
-        if(name.length() < 1 || password.length() < 1){
+       /*if(name.length() < 1 || password.length() < 1){
             result.setMsg("输入不能为空");
+            return result;
+        }*/
+        //用户名限制
+        if(!name.matches("[a-zA-Z0-9_]{6,9}")){
+            result.setMsg("用户名长度必须位6~9个字符，并且只能由英文、数字、下划线组成！");
+            return result;
+        }
+        //密码限制
+        if(password.contains(" ") || !password.matches("[a-zA-Z0-9\\W]{6,15}")){
+            result.setMsg("密码必须在6~15个字符内，由英文、数字、特殊符号(除了空格符号外)组成！");
+            return result;
+        }
+        //用户类型限制
+        if(type != 1 && type != 2){
+            result.setMsg("请选择注册的类型！");
             return result;
         }
         QueryWrapper queryWrapper = new QueryWrapper();
@@ -107,9 +122,27 @@ public class UserInfoController {
         Result result = new Result(null);
         if(userInfoVO.getName().length() < 1 || userInfoVO.getEmail().length() < 1 || userInfoVO.getIdcard().length() < 1 || userInfoVO.getRealName().length() < 1 ||
          userInfoVO.getPhone().length() < 1){
-            result.setMsg("输入不能为空");
+            result.setMsg("输入不能为空！");
             return result;
          }
+
+        if(!userInfoVO.getIdcard().matches("^[1-9]\\d{7}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])\\d{3}$|^[1-9]\\d{5}[1-9]\\d{3}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])\\d{3}([0-9]|X)$")){
+            result.setMsg("你输入的身份证号码有误！");
+            return result;
+        }
+
+        if(!userInfoVO.getPhone().matches("^1(3[0-9]|4[01456879]|5[0-35-9]|6[2567]|7[0-8]|8[0-9]|9[0-35-9])\\d{8}$")){
+            result.setMsg("你输入的手机号有误！");
+            return result;
+        }
+        if(!userInfoVO.getEmail().matches("[1-9][0-9]{4,}@qq.com")){
+            result.setMsg("你输入的E-mail有误！");
+            return result;
+        }
+        if(!userInfoVO.getRealName().matches("^[\\u4e00-\\u9fa5]{2,16}$")){
+            result.setMsg("你输入的真是姓名有误！");
+            return result;
+        }
         QueryWrapper queryWrapper = new QueryWrapper();
         queryWrapper.eq("name", userInfoVO.getName());
         List<UserInfo> userInfoTrue = userInfoMapper.selectList(queryWrapper);
@@ -138,15 +171,15 @@ public class UserInfoController {
                                  @RequestParam String oldPassword,
                                  @RequestParam String newPassword){
         Result result = new Result(null);
-        if(oldPassword.length() < 1 || newPassword.length() < 1) {
-            result.setMsg("输入不能为空");
+        if(oldPassword.contains(" ") || !oldPassword.matches("[a-zA-Z0-9\\W]{6,15}")){
+            result.setMsg("密码必须在6~15个字符内，由英文、数字、特殊符号(除了空格符号外)组成！");
             return result;
         }
         UserInfo userInfoTrue = userInfoMapper.selectById(id);
         if(userInfoTrue.getPassword().equals(oldPassword)) {
             userInfoTrue.setPassword(newPassword);
             userInfoMapper.updateById(userInfoTrue);
-            result.setMsg("修改成功");
+            result.setMsg("修改成功，即将返回登录页面");
             return result;
         }
         else {
