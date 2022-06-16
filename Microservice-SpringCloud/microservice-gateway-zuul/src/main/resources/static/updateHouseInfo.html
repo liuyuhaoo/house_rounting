@@ -141,13 +141,13 @@
 
             <form id="form1" onsubmit="return false" action="##" style="margin-left: 20px">
                 <input type="hidden" id="id">
+                <input type="hidden" id="name">
+                <input type="hidden" id="status">
                 标题:&ensp;&ensp;&ensp;<input type="text" id="title"></br>
                 <br>
                 地址:&ensp;&ensp;&ensp;<input type="text" id="address"></br>
                 <br>
                 价格:&ensp;&ensp;&ensp;<input type="text" id="price"></br>
-                <br>
-                发布者:&ensp;<input type="text" id="name"></br>
                 <br>
                 <br>
                 <input type="button" value="修改" onclick="update()" style="text-align: center; font-size: 18px; width: 80px" class="btn btn-primary">
@@ -246,6 +246,7 @@
                     document.getElementById('price').value=result.data.price;
                     document.getElementById('id').value=result.data.houseId;
                     document.getElementById('name').value=result.data.name;
+                    document.getElementById('status').value=result.data.status;
                 }
             },
             error: function (errorMsg) {
@@ -257,7 +258,8 @@
             id :  $("#id").val(),
             title :  $("#title").val(),
             address :  $("#address").val(),
-            price :  $("#price").val()
+            price :  $("#price").val(),
+            status : $("#status").val()
         }
         $.ajax({
             url: 'house/update',

@@ -9,7 +9,8 @@
                h.sale,
                h.time,
                u.id as userId,
-               u.name
+               u.name,
+               h.status
         from house_info h
                  left join user_house_relation uhr  on h.id = uhr.houseId
                  left join user_info u  on u.id = uhr.userId
